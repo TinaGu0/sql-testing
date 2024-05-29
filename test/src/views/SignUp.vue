@@ -34,7 +34,7 @@ const user = ref(null);
 const pass = ref(null);
 
 async function signUp() {
-    const { data, error } = await supabase.auth.signUp({
+    const { data: userData, error } = await supabase.auth.signUp({
         email: email.value,
         username: user.value,
         password: pass.value,
@@ -42,20 +42,20 @@ async function signUp() {
 if (error) {
     console.log(error)
 } else {
-    insertData(data)
+    insertData(userData)
 };
-console.log(data, error)
 };
 
 
-async function insertData() {
+async function insertData(userData) {
     const { data: insertData, error: insertError } = await supabase
     .from('login')
     .insert([
-      {user_id: userData.id, email: email.value, username: username.value, user_id: signUpData.user.id },
+      { id: userData.id ,email: email.value, username: user.value, password: pass.value},
     ])
     if (insertError) {
     console.error(insertError);
+    console.log(userData.id)
   } else {
     console.log('User data inserted successfully:', insertData);
   }
