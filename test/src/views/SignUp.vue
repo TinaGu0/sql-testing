@@ -16,8 +16,13 @@
             <label for="password">Password</label>
         </FloatLabel>
     </div>
-    <Button label="Submit" @click="signUp()"/>
+    <Button label="Submit" @click="submit()"/>
 </form>
+<Dialog v-model:visible="visible" modal header="error" :style="{ width: '25rem' }">
+    <div class="flex align-items-center gap-3 mb-3">
+        <p>Your password is too short. (at least 6 numbers)</p>
+    </div>
+</Dialog>
 </template>
 
 <script setup>
@@ -26,12 +31,25 @@ import Password from 'primevue/password';
 import FloatLabel from 'primevue/floatlabel';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
+import Dialog from 'primevue/dialog';
 
 import { supabase } from '../supabase.js';
+
+const visible = ref(false);
 
 const email = ref(null);
 const user = ref(null);
 const pass = ref(null);
+
+function submit() {
+    if (pass.value.length < 6) {
+        visible.value = true
+    } else {
+        //pass.value = null 
+        signUp()
+    }
+}
+
 
 async function signUp() {
     const { data: userData, error } = await supabase.auth.signUp({
@@ -44,6 +62,7 @@ if (error) {
     console.log(error)
 } else {
     insertData(userData)
+    return userData
 }
 };
 
