@@ -39,11 +39,12 @@ async function signUp() {
         username: user.value,
         password: pass.value,
 })
+console.log(userData)
 if (error) {
     console.log(error)
 } else {
     insertData(userData)
-};
+}
 };
 
 
@@ -51,13 +52,13 @@ async function insertData(userData) {
     const { data: insertData, error: insertError } = await supabase
     .from('login')
     .insert([
-      { id: userData.id ,email: email.value, username: user.value, password: pass.value},
+      { id: userData.user.id ,email: email.value, username: user.value, password: pass.value},
     ])
     if (insertError) {
     console.error(insertError);
-    console.log(userData.id)
+
   } else {
-    console.log('User data inserted successfully:', insertData);
+    console.log('Yay it works', insertData);
   }
 };
 
