@@ -1,4 +1,5 @@
 <template>
+    <h1>Sign Up</h1>
 <form>
     <div class="card flex justify-content-center">
         <FloatLabel>
@@ -20,9 +21,10 @@
 </form>
 <Dialog v-model:visible="visible" modal header="error" :style="{ width: '25rem' }">
     <div class="flex align-items-center gap-3 mb-3">
-        <p>Your password is too short. (at least 6 numbers)</p>
+        <p>{{ msg }}</p>
     </div>
 </Dialog>
+<button @click="signOut()">Sign out</button>
 </template>
 
 <script setup>
@@ -41,11 +43,13 @@ const email = ref(null);
 const user = ref(null);
 const pass = ref(null);
 
+const msg = ref('')
+
 function submit() {
     if (pass.value.length < 6) {
         visible.value = true
+        msg.value ='Your password is too short. (at least 6 numbers)'
     } else {
-        //pass.value = null 
         signUp()
     }
 }
@@ -79,6 +83,18 @@ async function insertData(userData) {
   } else {
     console.log('Yay it works', insertData);
   }
+};
+
+async function signOut() {
+    const { error } = supabase.auth.signOut()
+    if (error) {
+        console.log(error)
+    } else {
+        console.log("signed oUT")
+        const { data, error } = await supabase.auth.getSession()
+        console.log(data, error);
+        //revise
+    }
 };
 
 
