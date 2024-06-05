@@ -19,7 +19,7 @@
     </div>
     <Button label="Submit" @click="submit()"/>
 </form>
-<Dialog v-model:visible="visible" modal header="error" :style="{ width: '25rem' }">
+<Dialog v-model:visible="visible" modal header="error" :style="{ width: '25rem', height:'50rem' }">
     <div class="flex align-items-center gap-3 mb-3">
         <p>{{ msg }}</p>
     </div>
@@ -83,6 +83,7 @@ async function insertData(userData) {
   } else {
     console.log('Yay it works', insertData);
   }
+  return insertData.id
 };
 
 async function signOut() {

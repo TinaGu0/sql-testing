@@ -20,12 +20,26 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
+      //@ts-ignore
       component: () => import('../views/LoginPage.vue')
     },
     {
       path: '/signup',
       name: 'signup',
+      //@ts-ignore
       component: () => import('../views/SignUp.vue')
+    },
+    {
+      path: '/store',
+      name: 'store',
+      //@ts-ignore
+      component: () => import('../views/StoreFront.vue')
+    },
+    {
+      path: '/cart',
+      name: 'cart',
+      //@ts-ignore
+      component: () => import('../views/ShoppingCart.vue')
     },
   ]
 })

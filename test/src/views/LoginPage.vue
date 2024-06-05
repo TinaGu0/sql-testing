@@ -20,11 +20,11 @@
         <p>{{ note }}</p>
     </div>
 </Dialog>
-<button @click="getSession()">a</button>
+<button @click="getSession()">Get current session</button>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import Password from 'primevue/password';
 import FloatLabel from 'primevue/floatlabel';
 import InputText from 'primevue/inputtext';
@@ -59,7 +59,13 @@ async function signIn() {
 async function getSession() {
     const { data, error } = await supabase.auth.getSession()
     console.log(data)
+    if (error) {
+        console.log(error)
+    }
+    return data.session.user
 }
+
+
 
 </script>
 
