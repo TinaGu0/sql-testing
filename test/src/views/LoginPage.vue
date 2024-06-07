@@ -31,7 +31,7 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
 
-import { supabase } from '../supabase.js';
+import { supabase } from '../lib/supabase.js';
 
 const email = ref(null);
 const password = ref(null);

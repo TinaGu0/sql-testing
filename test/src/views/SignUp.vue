@@ -35,13 +35,17 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
 
-import { supabase } from '../supabase.js';
+import { supabase } from '../lib/supabase.js';
+
+import { useCartStore } from '@/stores/ShoppingCart.ts';
 
 const visible = ref(false);
 
 const email = ref(null);
 const user = ref(null);
 const pass = ref(null);
+
+const cartStore = useCartStore();
 
 const msg = ref('')
 
@@ -62,10 +66,12 @@ async function signUp() {
         password: pass.value,
 })
 console.log(userData)
+cartStore.insertId(userData.user.id)
 if (error) {
     console.log(error)
 } else {
     insertData(userData)
+    insertCartData(userData)
     return userData
 }
 };
@@ -83,7 +89,6 @@ async function insertData(userData) {
   } else {
     console.log('Yay it works', insertData);
   }
-  return insertData.id
 };
 
 async function signOut() {
@@ -98,6 +103,19 @@ async function signOut() {
     }
 };
 
+async function insertCartData(userData) {
+    const { data: insertData, error: insertError } = await supabase
+    .from('userCart')
+    .insert([
+      { id: userData.user.id , cartItems: JSON.stringify([])},
+    ])
+    if (insertError) {
+    console.error(insertError);
+
+  } else {
+    console.log('cart created', insertData);
+  }
+};
 
 </script>
 

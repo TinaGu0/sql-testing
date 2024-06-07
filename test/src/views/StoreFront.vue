@@ -11,6 +11,7 @@ import { ref, onMounted } from 'vue'
 
 onMounted (() => { getData() })
 
+//gets Data from pokemon API
 const pokemon = ref([]);
   async function getData() {
     try {
